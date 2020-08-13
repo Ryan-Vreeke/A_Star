@@ -11,6 +11,10 @@ public class Cell extends Rectangle
 	boolean wall, player, end;
 	Point left, right, top, bottom;
 	int w;
+	double f = 0;
+	int g = 0;
+	double h = 0;
+	Cell previous;
 
 	public Cell(int x, int y, int w)
 	{
@@ -37,6 +41,15 @@ public class Cell extends Rectangle
 		{
 			g.setColor(Color.black);
 			g.draw(new Rectangle(this));
+		}
+	}
+
+	public void draw(Graphics2D g, Color c)
+	{
+		if (!player && !wall && !end)
+		{
+			g.setColor(c);
+			g.fill(this);
 		}
 	}
 
@@ -68,7 +81,7 @@ public class Cell extends Rectangle
 		this.wall = false;
 	}
 
-	public void neighbors()
+	public void findNeighbors()
 	{
 
 		Point p = new Point(x / w, y / w);
@@ -93,13 +106,29 @@ public class Cell extends Rectangle
 		}
 	}
 
-	public List<Point> adj()
+	public List<Point> neighbors()
 	{
 		List<Point> temp = new ArrayList<Point>();
-		temp.add(left);
-		temp.add(right);
-		temp.add(bottom);
-		temp.add(top);
+		if (left != null)
+		{
+
+			temp.add(left);
+		}
+		if (right != null)
+		{
+
+			temp.add(right);
+		}
+		if (bottom != null)
+		{
+
+			temp.add(bottom);
+		}
+		if (top != null)
+		{
+			temp.add(top);
+
+		}
 
 		return temp;
 	}

@@ -21,6 +21,7 @@ public class Panel extends JPanel implements MouseListener
 	public static boolean player = false;
 	int n = 20;
 	int w;
+	boolean draw = false;
 
 	public Panel(int width, int height)
 	{
@@ -34,7 +35,7 @@ public class Panel extends JPanel implements MouseListener
 		this.addMouseListener(this);
 		this.w = width / n;
 
-		myTimerDelay = 1;
+		myTimerDelay = 16;
 		myTimer = new Timer(myTimerDelay, gameTimer);
 		myTimer.start();
 	}
@@ -55,6 +56,22 @@ public class Panel extends JPanel implements MouseListener
 	public void tick()
 	{
 		a.tick();
+		if (draw)
+		{
+			try
+			{
+
+				Point p = new Point(getMousePosition().x / w, getMousePosition().y / w);
+				if (this.wall)
+				{
+					a.click(p, Item.WALL);
+				}
+			} catch (Exception e)
+			{
+				// TODO: handle exception
+			}
+		}
+
 	}
 
 	public void paintComponent(Graphics g)
@@ -93,14 +110,14 @@ public class Panel extends JPanel implements MouseListener
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		// TODO Auto-generated method stub
+		draw = true;
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		// TODO Auto-generated method stub
+		draw = false;
 
 	}
 
